@@ -1,247 +1,243 @@
-import { ServiceItem, BenefitItem, FAQItem, Testimonial, ScenarioDataset, PricingPlan } from './types';
+import { ServiceItem, BenefitItem, FAQItem, ScenarioDataset } from './types';
 
-export const SERVICES: ServiceItem[] = [
+export const SLOGANS = [
+  "Convertimos el caos de tus planillas en claridad para tu negocio.",
+  "La perspectiva que necesitas para tomar el control de tus ventas.",
+  "De tablas confusas de Excel a decisiones inteligentes e inmediatas.",
+  "Miramos a través de tus datos para revelar el futuro de tu empresa.",
+  "Visualiza tus ingresos, controla tus gastos, expande tus márgenes.",
+  "Claridad empresarial diseñada para dueños, no para programadores.",
+  "Transformamos reportes manuales en tu mejor aliado de crecimiento.",
+  "Tus ventas, inventario y caja chica bajo control en un solo lugar.",
+  "El prisma que descompone lo complejo en respuestas sencillas.",
+  "Menos hojas de cálculo interminables. Más control real de tu PYME.",
+  "Haz que tus números trabajen para ti, no en contra de tu tiempo.",
+  "Toma decisiones con la seguridad de quien conoce sus números reales.",
+  "Control financiero ágil y transparente para la empresa del mañana.",
+  "Una sola pantalla para entender el pulso y la salud de tu negocio.",
+  "Simplificamos tu información para que te concentres en vender."
+];
+
+export interface PrismaSolution {
+  id: string;
+  name: string;
+  description: string;
+  setupPrice: string;
+  monthlyPrice: string;
+  icon: string;
+  target: string;
+  benefits: string[];
+  examples: string[];
+}
+
+export const SOLUTIONS: PrismaSolution[] = [
   {
-    id: 'conciliacion-cajas',
-    title: 'Control de Facturación y Caja Diaria',
-    description: 'Registra tus cobros diarios, ventas en efectivo y transferencias locales de forma ordenada para evitar cualquier descuadre de dinero al final de la jornada.',
+    id: 'dashboard-financiero',
+    name: 'Dashboard Financiero',
+    description: 'Control absoluto de tus ingresos, gastos fijos, flujo de caja semanal y previsión automatizada de egresos imprevistos.',
+    setupPrice: '$150',
+    monthlyPrice: '$20',
+    icon: 'DollarSign',
+    target: 'Finanzas, Caja y Bancos',
+    benefits: [
+      'Visualiza tu saldo real consolidado en tiempo real',
+      'Alertas tempranas de riesgo de liquidez para planillas o IVA',
+      'Categorización automática de egresos y gastos hormiga'
+    ],
+    examples: ['Flujo de caja proyectado', 'Balance mensual simplificado']
+  },
+  {
+    id: 'dashboard-comercial',
+    name: 'Dashboard Comercial',
+    description: 'Analiza el movimiento de tus ventas diarias, comportamiento de clientes frecuentes y rentabilidad neta por línea de producto.',
+    setupPrice: '$150',
+    monthlyPrice: '$20',
     icon: 'TrendingUp',
-    details: [
-      'Cuadre automático entre caja física y POS o cuentas bancarias',
-      'Registro rápido de cuentas por cobrar pendientes de clientes locales',
-      'Desglose simple por método de pago (Efectivo, Chivo, Tarjetas, Remesas)',
-      'Alertas inmediatas de diferencias sospechosas en caja diaria'
-    ]
+    target: 'Ventas y Clientes',
+    benefits: [
+      'Identifica al instante tus productos estrella y los más rezagados',
+      'Control correlativo de facturación y cobros de sucursales',
+      'Márgenes de ganancia calculados de forma automática'
+    ],
+    examples: ['Ranking de productos más vendidos', 'Evolución de ventas diarias']
   },
   {
-    id: 'reportes-ventas',
-    title: 'Generador de Reportes para tu Contador',
-    description: 'Sustituye cuadernos a mano y archivos borrosos por resúmenes mensuales limpios y estructurados que facilitarán las declaraciones de IVA y balances.',
-    icon: 'FileText',
-    details: [
-      'Exportación rápida a formatos estándar de contabilidad',
-      'Gráficos visuales sencillos del rendimiento del mes o trimestre',
-      'Separación clara de gastos deducibles e ingresos brutos',
-      'Historial de rendimiento limpio guardado en la nube'
-    ]
+    id: 'dashboard-ejecutivo',
+    name: 'Dashboard Ejecutivo',
+    description: 'La vista panorámica perfecta para directores. Consolida múltiples fuentes, sucursales y KPIs clave en una sola pantalla.',
+    setupPrice: '$200',
+    monthlyPrice: '$25',
+    icon: 'Layers',
+    target: 'Dirección General y Socios',
+    benefits: [
+      'Consolidación ágil sin requerir llamadas o auditar Excel uno a uno',
+      'Estado general de salud financiera del consorcio',
+      'Metas mensuales con barra de progreso interactiva'
+    ],
+    examples: ['Panel de KPIs globales', 'Comparativa inter-sucursal']
   },
   {
-    id: 'control-inventarios',
-    title: 'Planillas de Inventario y Proveedores',
-    description: 'Controla de manera intuitiva las entradas y salidas de producto de tus bodegas o sucursales para evitar quedarte sin stock en temporadas clave.',
-    icon: 'BarChart3',
-    details: [
-      'Alertas de stock mínimo para reposición de mercadería',
-      'Mapeo agrupado por categorías de productos y marcas',
-      'Control simple de costos de adquisición de distribuidores',
-      'Seguimiento a mermas o pérdidas de producto'
-    ]
-  },
-  {
-    id: 'flujo-caja',
-    title: 'Previsión de Pagos e IVA Semanal',
-    description: 'Anticipa tus obligaciones financieras recurrentes de fin de mes como alquileres, planillas, pago de IVA y facturas de distribuidores.',
-    icon: 'Sheet',
-    details: [
-      'Proyección simple de saldo disponible según historial promedio',
-      'Recordatorio de plazos de pago y compromisos pendientes',
-      'Simulador de gastos imprevistos de operaciones o mantenimiento',
-      'Sugerencias prácticas para evitar quedarte sin efectivo operativo'
-    ]
-  },
-  {
-    id: 'analisis-excel',
-    title: 'Lector Automatizado de Planillas Excel',
-    description: 'Sube las planillas desordenadas creadas por tus empleados o extraídas de tu POS y obtén de inmediato un resumen ordenado y limpio de prioridades.',
-    icon: 'Gauge',
-    details: [
-      'Limpieza de registros duplicados o faltantes en segundos',
-      'Clasificación automática de clientes que compran con mayor frecuencia',
-      'Resumen de márgenes reales descontando costos variables',
-      'Mapeo veloz sin requerir conocimientos de fórmulas complejas de Excel'
-    ]
-  },
-  {
-    id: 'asistente-cajachica',
-    title: 'Asistente de Prespuestos y Caja Chica',
-    description: 'Lleva el registro de cada compra de emergencia, papelería, combustible o viáticos para asegurar el control absoluto de tus recursos.',
-    icon: 'Cpu',
-    details: [
-      'Registro ultra rápido e intuitivo optimizado para móviles',
-      'Mapeo de fugas hormiga de presupuesto en reparaciones menores',
-      'Asignación ágil de límites máximos de compra por sucursal',
-      'Validación de facturas locales o tickets informales'
-    ]
+    id: 'dashboard-restaurantes',
+    name: 'Dashboard de Restaurantes',
+    description: 'Optimizado para alimentos y bebidas. Cruza cuentas de POS local con envíos a domicilio (WhatsApp, Hugo, PedidosYa) y controla la merma.',
+    setupPrice: '$150',
+    monthlyPrice: '$20',
+    icon: 'Utensils',
+    target: 'Pupuserías, Cafés, Restaurantes',
+    benefits: [
+      'Cuadre de caja diario contrastando POS, efectivo e IVA',
+      'Costeo de platillos dinámico vs precio de venta',
+      'Seguimiento al rendimiento por turno y meseros'
+    ],
+    examples: ['Venta por canal (Mesa vs Delivery)', 'Control diario de caja chica']
   }
 ];
 
 export const BENEFITS: BenefitItem[] = [
   {
-    id: 'time-saved',
-    label: 'Ahorro de Tiempo de Cierre',
-    value: 'Hasta 20h',
-    metricLabel: 'Semanales recuperadas por dueño',
-    description: 'Libérate del trabajo administrativo de ordenar facturas o calcular cuentas a mano al final de cada jornada diaria de operaciones.'
+    id: 'b-time',
+    label: 'Tiempo Liberado del Propietario',
+    value: '18 horas',
+    metricLabel: 'Semanales ahorradas en reportes',
+    description: 'Sustituye horas de cálculo nocturno y cuadres manuales en cuadernos por un proceso que se automatiza en un clic.'
   },
   {
-    id: 'errors-eliminated',
-    label: 'Control de Descuadres',
-    value: '95%',
-    metricLabel: 'Menos errores en caja',
-    description: 'Visualiza rápidamente dónde se pierde efectivo, qué sucursal tiene excesos de inventarios invisibles o cobros retrasados.'
+    id: 'b-descuadre',
+    label: 'Control de Caja y Fugas',
+    value: '94% menos',
+    metricLabel: 'Errores y descuadres diarios',
+    description: 'Detecta de forma inmediata discrepancias físicas en caja chica, compras no autorizadas y cuentas por cobrar demoradas.'
   },
   {
-    id: 'fast-decisions',
-    label: 'Crecimiento de Ventas',
-    value: 'Clara Visión',
-    metricLabel: 'Productos más rentables',
-    description: 'Sabe con precisión matemática qué mercadería genera margen real y cuál tiene estancado tu capital de trabajo en bodega.'
-  },
-  {
-    id: 'accounting-peace',
-    label: 'Tranquilidad con el Contador',
-    value: '100% Listo',
-    metricLabel: 'Reportes en segundos',
-    description: 'Genera las tablas claras de ventas mensuales requeridas para el cierre e IVA, evitando multas y retrasos con el Ministerio de Hacienda.'
+    id: 'b-margen',
+    label: 'Crecimiento de Rendimiento',
+    value: '+22% margen',
+    metricLabel: 'Mayor lucro identificando estrellas',
+    description: 'Sabrás exactamente qué productos sostienen la rentabilidad del negocio y cuáles estancan tu flujo de caja en bodega.'
   }
 ];
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    id: 'faq-1',
-    question: '¿PRISMA se conecta directamente con ERPs avanzados como SAP, Holded o NetSuite?',
-    answer: 'Actualmente, no contamos con conexiones directas automáticas con ERPs robustos o internacionales de forma directa. No obstante, nuestro sistema está optimizado para leer y ordenar cualquier archivo Excel, CSV, o planilla contable que exportes de tus bancos locales de El Salvador (Banco Agrícola, BAC Credomatic, Cuscatlán, Dávivienda, etc.) o de tu sistema POS local.'
+    id: 'f-1',
+    question: '¿Qué es exactamente PRISMA BI Solutions?',
+    answer: 'Somos un servicio híbrido especializado en PYMEs de Centroamérica y LATAM. No te vendemos un software gigante y complejo que nadie sabrá usar. En su lugar, tomamos la información que ya registras (como planillas de Excel, archivos de tu POS o registros bancarios) y creamos para ti un dashboard web privado, moderno y visualmente intuitivo que te da claridad absoluta sobre tu negocio.'
   },
   {
-    id: 'faq-2',
-    question: 'Si soy una PYME pequeña en El Salvador, ¿cómo me ayuda la plataforma con un ejemplo?',
-    answer: 'Imagina que tienes una distribuidora, tienda o farmacia con sucursales. Al final de la semana, subes tu planilla Excel con las ventas diarias desordenadas. PRISMA analiza los datos al instante, elimina duplicados, calcula qué sucursal es más rentable del mes, proyecta el efectivo disponible para el pago de tu IVA o planilla a fin de mes, y te sugiere las mejores decisiones basadas en tus números.'
+    id: 'f-2',
+    question: '¿PRISMA requiere que dejemos de usar Excel?',
+    answer: '¡Para nada! Sabemos que Excel es el alma del control de muchas empresas. Sigue utilizándolo para tus registros habituales. Lo que hacemos es conectarnos a esas planillas (por básicas que sean) para convertirlas automáticamente en gráficos modernos de nivel corporativo premium, eliminando la necesidad de que calcules fórmulas complejas.'
   },
   {
-    id: 'faq-3',
-    question: '¿Cómo funciona la recomendación automática de soluciones recomendadas?',
-    answer: 'En el panel interactivo, puedes describir de forma sencilla a qué se dedica tu negocio (ej. "Tengo una ferretería en San Miguel con 2 sucursales y manejo planillas a mano"). Nuestra IA analizará tus retos y te recomendará de forma personalizada qué soluciones, precios y planillas Excel necesitas implementar primero.'
+    id: 'f-3',
+    question: '¿Necesito conocimientos técnicos avanzados o un programador con nosotros?',
+    answer: 'Absolutamente no. PRISMA está diseñado específicamente para dueños de negocios, gerentes y administradores que quieren ver respuestas claras en español sencillo, sin código, datos crudos incomprensibles o jerga informática.'
   },
   {
-    id: 'faq-4',
-    question: '¿Qué seguridad tienen mis planillas financieras en esta plataforma?',
-    answer: 'Tus planillas y datos son completamente privados. No compartimos tu información con terceros, ni los usamos para entrenar modelos públicos. Operamos con servidores seguros con cifrado de alto nivel para resguardar la confidencialidad de tu balance de negocios.'
+    id: 'f-4',
+    question: '¿Cuánto tiempo toma tener funcionando mi primer Dashboard?',
+    answer: 'Nuestra implementación estrella para PYMEs toma entre 3 y 5 días hábiles desde que nos compartes tu estructura de datos inicial. Es rápido, guiado y te acompañamos paso a paso vía WhatsApp.'
   },
   {
-    id: 'faq-5',
-    question: '¿Se requiere tener un programador o experto en tecnología para usar PRISMA?',
-    answer: 'Para nada. PRISMA está diseñada precisamente para el dueño de PYME que prefiere la simplicidad. Todas las pantallas están en español claro con explicaciones sencillas, sin tecnicismos complejos o códigos.'
+    id: 'f-5',
+    question: '¿Mi información de ventas y costos estará segura?',
+    answer: 'Por supuesto. La confidencialidad es nuestro pilar fundamental. Tus planillas financieras se cargan en un entorno web encriptado propiedad exclusiva de tu negocio, y firmamos acuerdos legales de confidencialidad estricta.'
+  },
+  {
+    id: 'f-6',
+    question: '¿Funciona desde mi teléfono celular o tablet?',
+    answer: 'Sí. Todos nuestros dashboards son totalmente amigables con dispositivos móviles. Podrás verificar tus ventas diarias, cuadre de caja o stock de bodegas directamente en tu celular mientras estás fuera del local o de viaje.'
   }
 ];
 
-export const TESTIMONIALS: Testimonial[] = []; // Testimonials removed based on requirements
-
-export const PRESET_SCENARIOS: ScenarioDataset[] = [
+// Interactive mock data for real industry scenarios
+export const INDUSTRY_SCENARIOS = [
   {
-    id: 'scen-saas',
-    name: 'Distribuidora San Salvador S.L.',
-    industry: 'Distribución y Comercialización Local',
+    id: 'restaurante-pyme',
+    industry: 'Alimentos & Bebidas',
+    businessExample: 'Pupusería & Bistro Loreto (Antiguo Cuscatlán)',
+    description: 'Manejan cobros físicos, transferencias y pedidos por apps de delivery desorganizados en cuadernos.',
     metrics: {
-      mrr: '$24,500 (Ventas)',
-      cac: '$180 (Prov)',
-      churn: '2.4%',
-      ltv: '$8,500',
-      growthMoM: '+14.2% Ventas'
+      leftLabel: 'Caja Promedio Semanal',
+      leftValue: '$4,800',
+      rightLabel: 'Margen Neto Real',
+      rightValue: '34.2%',
+      extraLabel: 'Canal Principal',
+      extraValue: 'WhatsApp Delivery'
     },
-    chartData: [
-      { period: 'Ene', value: 15000, projection: 15000 },
-      { period: 'Feb', value: 17200, projection: 17200 },
-      { period: 'Mar', value: 19100, projection: 19100 },
-      { period: 'Abr', value: 21500, projection: 21500 },
-      { period: 'May', value: 24500, projection: 24500 },
-      { period: 'Jun', value: 26000, projection: 28200 },
-      { period: 'Jul', value: 28000, projection: 31000 },
-      { period: 'Ago', value: 29500, projection: 33500 }
+    chartPoints: [
+      { category: 'Lunes', value: 350, cost: 230 },
+      { category: 'Martes', value: 410, cost: 240 },
+      { category: 'Miércoles', value: 480, cost: 260 },
+      { category: 'Jueves', value: 620, cost: 310 },
+      { category: 'Viernes', value: 920, cost: 440 },
+      { category: 'Sábado', value: 1250, cost: 580 },
+      { category: 'Domingo', value: 1100, cost: 520 }
     ],
-    rawDataSummary: `
-      Distribuidora San Salvador S.L. - Reporte de Ventas Trimestral.
-      Ventas Totales del Mes: $24,500
-      Cuentas pendientes por cobrar de clientes habituales: $3,200
-      Gastos operativos clave (Alquiler, sueldos, energía): $12,000
-      Costo aproximado de mercadería comprada en aduana: $8,500
-      Margen Bruto estimado: 35.4%
-      Efectivo disponible en caja chica para emergencias: $850
-      Problema detectado: Hay más de $3,200 de saldo atorado en crédito a clientes de más de 30 días, lo que pone bajo estrés la caja antes de pagar planillas la próxima semana.
-    `
-  }
-];
-
-export const PRICING_PLANS: PricingPlan[] = [
-  {
-    id: 'basico',
-    name: 'Plan Emprendedor',
-    price: '$19',
-    period: '/mes',
-    description: 'Para pequeños comercios independientes que desean digitalizar su primer control de caja y ventas sin complicaciones.',
-    features: [
-      'Hasta 2 usuarios concurrentes de tu equipo',
-      'Visualizador interactivo de ventas diarias',
-      'Carga guiada de 1 planilla Excel de ejemplo al mes',
-      'Alertas sencillas de descuadres de caja chica',
-      'Soporte directo prioritario por WhatsApp en El Salvador',
-      'Exportación segura de reportes para tu contador local'
-    ],
-    cta: 'Iniciar como Emprendedor',
-    popular: false,
-    tier: 'starter'
+    insightText: 'Análisis PRISMA: El 42% de tus ingresos ingresa el fin de semana por WhatsApp. Sin embargo, el egreso en verduras y carnes compradas a diario en el mercado sin factura está mermando un 8% tu rentabilidad real. Recomendación: Compras programadas los miércoles.'
   },
   {
-    id: 'crecimiento',
-    name: 'Plan Crecimiento',
-    price: '$44',
-    period: '/mes',
-    description: 'Para negocios en expansión con un local físico y ventas por canales digitales que necesitan proyecciones de caja claras.',
-    features: [
-      'Hasta 5 usuarios de tu personal',
-      'Dashboard completo con alertas de inventario mínimo',
-      'Análisis de hasta 4 planillas de ventas al mes',
-      'Previsiones sencillas de cuotas de IVA a fin de mes',
-      'Recomendador Inteligente de Soluciones para tu rubro',
-      'Soporte prioritario 24/7 por chat y WhatsApp'
+    id: 'retail-pyme',
+    industry: 'Ferreterías & Comercial',
+    businessExample: 'Ferretería El Progreso (San Miguel)',
+    description: 'Enorme inventario de repuestos con alta rotación de marcas. Pérdidas por falta de stock oportuno en temporadas altas.',
+    metrics: {
+      leftLabel: 'Código de Artículos',
+      leftValue: '1,420 SKU',
+      rightLabel: 'Artículos sin Rotar',
+      rightValue: '18%',
+      extraLabel: 'Alerta Crítica',
+      extraValue: 'Merma en Aceros'
+    },
+    chartPoints: [
+      { category: 'Herramientas', value: 1800, cost: 1100 },
+      { category: 'Pinturas', value: 2400, cost: 1450 },
+      { category: 'Tuberías', value: 1500, cost: 950 },
+      { category: 'Eléctricos', value: 3200, cost: 2200 },
+      { category: 'Cemento/Varilla', value: 5000, cost: 4100 }
     ],
-    cta: 'Impulsar mi Negocio',
-    popular: true,
-    tier: 'business'
+    insightText: 'Análisis PRISMA: El departamento de "Cemento/Varilla" aporta el mayor volumen de ventas ($5,000) pero con apenas 18% de margen. En contraste, "Pinturas" aporta $2,400 con un margen del 39.5%. Sugerimos reasignar el 15% del capital de trabajo a stock de pinturas.'
   },
   {
-    id: 'multisucursal',
-    name: 'Plan Multi-Sucursal',
-    price: '$79',
-    period: '/mes',
-    description: 'Para PYMES consolidadas que manejan múltiples sucursales, bodegas o equipos de distribución con alto inventario.',
-    features: [
-      'Usuarios de equipo ilimitados en el panel',
-      'Control consolidado de hasta 4 sucursales o bodegas locales',
-      'Cargas ilimitadas de planillas de ventas diarias y gastos',
-      'Análisis predictivo de flujo de caja para planillas y aguinaldos',
-      'Asesor de recomendaciones personalizado ilimitado',
-      'Soporte prioritario premium en videollamada'
+    id: 'distribuidora-pyme',
+    industry: 'Distribución & Logística',
+    businessExample: 'Importaciones y Distribuidora Cuscatlán',
+    description: 'Ventas al por mayor a pequeñas tiendas del país. Dolores de cabeza cobrando créditos vencidos.',
+    metrics: {
+      leftLabel: 'Cuentas por Cobrar',
+      leftValue: '$12,450',
+      rightLabel: 'Cartera Vencida >30d',
+      rightValue: '28.4%',
+      extraLabel: 'Cobro Promedio',
+      extraValue: '41 días'
+    },
+    chartPoints: [
+      { category: 'Clientes A', value: 5400, cost: 3200 },
+      { category: 'Clientes B', value: 3100, cost: 2000 },
+      { category: 'Clientes C', value: 2200, cost: 1600 },
+      { category: 'Nuevos', value: 1750, cost: 1200 }
     ],
-    cta: 'Consolidar Sucursales',
-    popular: false,
-    tier: 'business'
+    insightText: 'Análisis PRISMA: Los clientes tipo "B" y "C" representan el 74% de las facturas retrasadas a más de 30 días, bloqueando tu liquidez operativa. Alerta: El costo de financiar este crédito está absorbiendo $450 mensuales de tu cuenta bancaria.'
   },
   {
-    id: 'acompaniado',
-    name: 'Plan Premium Plus',
-    price: '$129',
-    period: '/mes',
-    description: 'Para empresas familiares o comercios medianos que buscan soporte e implementación a la medida de sus planillas.',
-    features: [
-      'Usuarios del sistema ilimitados con perfiles diferentes',
-      'Adaptación completa de tus planillas locales de Excel por nuestro equipo',
-      'Sucursales y bodegas ilimitadas registradas',
-      'Sesión semanal de 1 hora con un consultor de datos asignado',
-      'Monitoreo exclusivo de cuentas por cobrar y alertas de riesgo',
-      'Línea VIP telefónica de soporte directo inmediato'
+    id: 'servicios-pyme',
+    industry: 'Servicios Profesionales',
+    businessExample: 'Clínica & Consultoría de Oriente (San Vicente)',
+    description: 'Servicios médicos y venta paralela de medicamentos. Dificultad para saber si ganan por consultas o por recetas.',
+    metrics: {
+      leftLabel: 'Consultas / Mes',
+      leftValue: '340 citas',
+      rightLabel: 'Ingreso Promedio',
+      rightValue: '$32 / cita',
+      extraLabel: 'Margen Farmacia',
+      extraValue: '48%'
+    },
+    chartPoints: [
+      { category: 'Consultas', value: 4500, cost: 1800 },
+      { category: 'Procedimientos', value: 3200, cost: 1200 },
+      { category: 'Medicamentos', value: 6800, cost: 3500 },
+      { category: 'Estética', value: 1500, cost: 900 }
     ],
-    cta: 'Elegir Plan Premium Plus',
-    popular: false,
-    tier: 'business'
+    insightText: 'Análisis PRISMA: La venta de Medicamentos representa el 52% de tus ingresos netos. Los procedimientos clínicos son altamente rentables en margen bruto (más del 60%), lo que indica que capacitar a tu personal para recomendar más procedimientos aumentará tu margen global.'
   }
 ];

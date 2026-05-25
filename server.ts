@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -279,6 +280,150 @@ async function startServer() {
         ],
         taxTip: 'Ayuda a que tu contador presente el IVA a tiempo con Hacienda.'
       });
+    }
+  });
+
+  // 4. Persistence endpoints for Leads (Demos & Call Bookings)
+  const LEADS_FILE_PATH = path.join(process.cwd(), 'leads.json');
+
+  // Initialize mock data if leads.json doesn't exist to show brilliant starting points
+  if (!fs.existsSync(LEADS_FILE_PATH)) {
+    const seedLeads = [
+      {
+        id: "lead_seed1",
+        type: "demo",
+        name: "Carlos Mendoza",
+        email: "carlos.mendoza@elsol.com.sv",
+        company: "Distribuidora El Sol",
+        notes: "Interesados en migrar 5 planillas de cobro y cuadres de caja diarios.",
+        date: "2026-05-12",
+        time: "",
+        contactMethod: "correo",
+        createdAt: "2026-05-12T10:15:00.000Z"
+      },
+      {
+        id: "lead_seed2",
+        type: "booking",
+        name: "Roxana Alemán",
+        email: "roxana@ferreterialacampana.com",
+        company: "Ferretería El Tornillo",
+        notes: "Programación de llamada rápida para ver control multi-sucursal.",
+        date: "2026-05-14",
+        time: "10:30",
+        contactMethod: "whatsapp",
+        createdAt: "2026-05-14T14:30:00.000Z"
+      },
+      {
+        id: "lead_seed3",
+        type: "demo",
+        name: "Héctor Silva",
+        email: "hector.silva@pupuserialilu.com",
+        company: "Pupusería El Triunfo",
+        notes: "Necesito ver cómo organizar mi caja chica de compras de ingredientes diarios.",
+        date: "2026-05-19",
+        time: "",
+        contactMethod: "llamada",
+        createdAt: "2026-05-19T08:45:00.000Z"
+      },
+      {
+        id: "lead_seed4",
+        type: "booking",
+        name: "Ing. Gerardo Reyes",
+        email: "greyes@dentalscalonsv.com",
+        company: "Clínica de Especialidades Dental Escalón",
+        notes: "Llamar por teléfono directo. Queremos saber del Plan Crecimiento.",
+        date: "2026-05-22",
+        time: "14:00",
+        contactMethod: "llamada",
+        createdAt: "2026-05-22T19:00:00.000Z"
+      },
+      {
+        id: "lead_seed5",
+        type: "demo",
+        name: "Karen Trejo",
+        email: "karen@boutiqueceleste.sv",
+        company: "Boutique Celeste",
+        notes: "Solicitud de demo para control de stock de ropa importada.",
+        date: "2026-05-25",
+        time: "",
+        contactMethod: "correo",
+        createdAt: "2026-05-25T15:20:00.000Z"
+      }
+    ];
+    fs.writeFileSync(LEADS_FILE_PATH, JSON.stringify(seedLeads, null, 2), 'utf-8');
+  }
+
+  const readLeads = () => {
+    try {
+      if (fs.existsSync(LEADS_FILE_PATH)) {
+        const fileContent = fs.readFileSync(LEADS_FILE_PATH, 'utf-8');
+        return JSON.parse(fileContent);
+      }
+    } catch (err) {
+      console.error("Error reading leads file:", err);
+    }
+    return [];
+  };
+
+  const writeLeads = (leads: any[]) => {
+    try {
+      fs.writeFileSync(LEADS_FILE_PATH, JSON.stringify(leads, null, 2), 'utf-8');
+    } catch (err) {
+      console.error("Error writing leads file:", err);
+    }
+  };
+
+  // GET leads
+  app.get('/api/leads', (req, res) => {
+    try {
+      const leads = readLeads();
+      res.json(leads);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // POST a new lead
+  app.post('/api/leads', (req, res) => {
+    try {
+      const { type, name, email, company, notes, date, time, contactMethod } = req.body;
+      if (!name || !email) {
+        return res.status(400).json({ error: 'Name and email are required to register a lead' });
+      }
+
+      const leads = readLeads();
+      const newLead = {
+        id: 'lead_' + Math.random().toString(36).substr(2, 9),
+        type, // 'demo' | 'booking'
+        name,
+        email,
+        company: company || '',
+        notes: notes || '',
+        date: date || new Date().toISOString().split('T')[0],
+        time: time || '',
+        contactMethod: contactMethod || 'whatsapp',
+        createdAt: new Date().toISOString()
+      };
+
+      leads.push(newLead);
+      writeLeads(leads);
+
+      res.status(201).json({ success: true, lead: newLead });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // DELETE a lead
+  app.delete('/api/leads/:id', (req, res) => {
+    try {
+      const { id } = req.params;
+      const leads = readLeads();
+      const filteredLeads = leads.filter((lead: any) => lead.id !== id);
+      writeLeads(filteredLeads);
+      res.json({ success: true, message: `Lead ${id} deleted successfully` });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
     }
   });
 

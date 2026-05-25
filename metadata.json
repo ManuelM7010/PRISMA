@@ -1,6 +1,6 @@
 {
-  "name": "PRISMA AI Solutions",
-  "description": "Executive B2B artificial intelligence solutions. Transform business data, financial forecasting, and workflows with the FinPilot AI suite.",
+  "name": "PRISMA BI Solutions",
+  "description": "Convertimos datos complejos y planillas Excel de PYMEs en El Salvador y LATAM en dashboards simples, claridad financiera y crecimiento de negocio sin esfuerzo.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
